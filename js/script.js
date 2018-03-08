@@ -14,16 +14,47 @@ $(document).ready(function(){
   function giphyURLWithSearchTerm(searchTerm) {
       // write a function that will return a url for the giphy API with
       // the searchTerm provided in the parameters
+       console.log
+    ("looking for" + searchTerm);
+    var url= "https://api.giphy.com/v1/stickers/search?q=" + searchTerm + "&api_key=dc6zaTOxFJmzC";
+    return url;
   }
 
   function appendImageToGallery(srcURL) {
       // write a function that will append an <img> to the div with class="gallery"
       // using the URL provided in the parameters
+      console.log("hello");
+    $('.gallery').append('<img src="' + srcURL + '">');
   }
 
   function callGiphyAPIWithSearchTerm(searchTerm) {
       // use $.ajax to call the giphy api with the given search term from the parameters.
       // get the first image url from the ajax response
       // use appendImageToGallery to put the image onto the screen
-  }
+      var giphyURL = giphyURLWithSearchTerm(searchTerm);
+    console.log(giphyURL);
+    
+    $.ajax({
+      url: giphyURL,
+      method: "GET",
+      success: function(response) {
+           var random = Math.floor(Math.random() * 8);
+           var url = response.data[random].images.original.url;
+           appendImageToGallery(url);
+           
+      },
+    }); 
+}
+
+    
+    
+    
+    
+    
+  $("button").click (function() {
+    
+var value=$("input").val();
+
+    callGiphyAPIWithSearchTerm(value);
+});
 });
